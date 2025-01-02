@@ -7,6 +7,7 @@ int main(int argc, char *argv[]){
 	Chunk chunk;
 	initChunk(&chunk);
 	writeChunk(&chunk, OP_RETURN);
+	disassembleChunk(&chunk, "test chunk");
 	freeChunk(&chunk);
 	// basic use of all the functions so far
   }
