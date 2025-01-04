@@ -10,6 +10,11 @@
 typedef enum{
   OP_CONSTANT,
   OP_RETURN,
+  OP_NEGATE,
+  OP_ADD,
+  OP_SUBTRACT,
+  OP_DIVIDE,
+  OP_MULTIPLY
 }OPCode;
 // so basically we just make OPCode a type and then the variables inside are instances of that type
 

@@ -17,15 +17,7 @@
 		reallocate(pointer, sizeof(type) * (oldCount), 0)
 
 
-void* reallocate(void *pointer, size_t oldSize, size_t newSize){
-    if(newSize == 0){
-        free(pointer);
-        return NULL;
-    }
-    void* result = realloc(pointer, newSize);
-    if (result == NULL) exit(1); // incase we do not have enough memory to allocate
-    return result;
-}
+void* reallocate(void *pointer, size_t oldSize, size_t newSize);
 
 // need to get many pointer types so we use void*
 
