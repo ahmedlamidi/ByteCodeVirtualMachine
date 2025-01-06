@@ -9,6 +9,7 @@ void initChunk(Chunk *chunk) {
 	chunk->capacity = 0;
 	chunk->code = NULL;
 	chunk->lines = NULL;
+	chunk->line_start = 0;
 	initValueArray(&chunk->constants);
 }
 
@@ -17,10 +18,29 @@ void writeChunk(Chunk *chunk, uint8_t byte, int line) {
 		int oldCapacity = chunk->capacity;
 		chunk->capacity = GROW_CAPACITY(oldCapacity);
   		chunk->code = GROW_ARRAY(uint8_t, chunk->code, oldCapacity, chunk->capacity);
-  		chunk->lines = GROW_ARRAY(int, chunk->lines, oldCapacity, chunk->capacity);
+	}
+	while (line - chunk -> line_start > chunk->line_capacity)
+	{
+		if (chunk -> line_start == 0)
+		{
+			chunk->line_start = line;
+		}
+		int oldCapacity = chunk->line_capacity;
+		chunk->line_capacity = GROW_CAPACITY(oldCapacity);
+		chunk->lines = GROW_ARRAY(int, chunk->lines, oldCapacity, chunk->line_capacity);
+		for (int ind = oldCapacity; ind < chunk->line_capacity; ind++)
+		{
+			chunk->lines[ind] = 0;
+			// initialize them all to zero
+			// ensures that there is no data unclean in the array
+			// should now be equal to line number
+		}
+		// this is to initiialize it and to make it the right size
 	}
 	chunk->code[chunk->count] = byte;
-	chunk->lines[chunk->count] = line;
+	chunk->lines[line - chunk->line_start] += 1;
+	// compressed the line data
+	// need to make sure they all start at 0
 	chunk->count++;
   // count should point to the end of the chunk array
 }

@@ -24,6 +24,8 @@ typedef struct{
   uint8_t* code;
   ValueArray constants;
   int* lines;
+  int line_start;
+  int line_capacity;
 } Chunk;
 // same thing here we just made Chunk a struct which contains a list of unsigned 8 bit integers
 // implement it as a dynamic array
