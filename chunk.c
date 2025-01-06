@@ -45,6 +45,18 @@ void writeChunk(Chunk *chunk, uint8_t byte, int line) {
   // count should point to the end of the chunk array
 }
 
+int getLine(Chunk *chunk, int indInstruction)
+{
+	int line_offset = 0;
+	while (indInstruction > 0)
+	{
+		indInstruction -= chunk->lines[line_offset];
+		line_offset++;
+	}
+	// checks how many bytes we need to go over before we can get to the line this chunk resides in
+	return line_offset + chunk->line_start;
+}
+
 void freeChunk(Chunk* chunk){
 	FREE_ARRAY(uint8_t, chunk->code, chunk->capacity);
 	freeValueArray(&chunk->constants);
